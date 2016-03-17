@@ -208,7 +208,30 @@ module.exports = function(source) {
 				});
 			};
 
-			resolveWithContexts();
+			// Fix from https://github.com/pcardune/handlebars-loader/issues/75
+			// helpers should only be looked for in one directory
+			var candidateRequests = query.helperDirs.map(function(helperDir){
+			  return path.join(helperDir, request);
+			});
+			var resolveAsHelper = function() {
+			  var newRequest = candidateRequests.shift();
+
+			  loaderApi.resolve(loaderApi.context, newRequest, function(err, result){
+			    if (!err && result) {
+			      return callback(err, result);
+			    } else if (candidateRequests.length > 0) {
+			      resolveAsHelper();
+			    } else {
+			      return callback(err, result);
+			    }
+			  });
+			};
+
+			if (type === 'helper' || type === 'unclearStuff') {
+			  resolveAsHelper();
+			} else {
+			  resolveWithContexts();
+			}
 		};
 
 		var resolveUnclearStuffIterator = function(stuff, unclearStuffCallback) {
