@@ -1,5 +1,8 @@
 {
   "name": "gitter-handlebars-loader",
+  "publishConfig": {
+    "registry": "http://beta-internal:4873"
+  },
   "contributors": [
     "Alan @altano",
     "Tobias Koppers @sokra",
