@@ -29,9 +29,16 @@ module.exports = function(source) {
 		extensions = extensions.split(/[ ,;]/g);
 	}
 
-	var rootRelative = query.rootRelative;
-	if (rootRelative == null) {
-		rootRelative = "./";
+	var getRootRelative = function(type) {
+		var rootRelative = query.rootRelative || "./";
+		if(query.partialsRootRelative && type === "partial") {
+			rootRelative = query.partialsRootRelative;
+		}
+		else if(query.helpersRootRelative && type === "helper") {
+			rootRelative = query.helpersRootRelative;
+		}
+
+		return rootRelative;
 	}
 
 	var foundPartials = {};
@@ -136,7 +143,7 @@ module.exports = function(source) {
 			else if (type === 'helper' && query.helperDirs && query.helperDirs.length)
 				return ref;
 			else
-				return rootRelative + ref;
+				return path.join(getRootRelative(type), ref);
 		}
 
 		// Need another compiler pass?
