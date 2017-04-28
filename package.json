@@ -1,8 +1,5 @@
 {
-  "name": "gitter-handlebars-loader",
-  "publishConfig": {
-    "registry": "http://beta-internal:4873"
-  },
+  "name": "@gitterhq/handlebars-loader",
   "contributors": [
     "Alan @altano",
     "Tobias Koppers @sokra",
@@ -30,7 +27,7 @@
     "type": "git",
     "url": "git://github.com/altano/handlebars-loader.git"
   },
-  "version": "1.2.0",
+  "version": "1.2.0-a",
   "devDependencies": {
     "coveralls": "^2.11.8",
     "html-loader": "^0.3.0",
